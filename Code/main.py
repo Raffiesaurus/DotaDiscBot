@@ -24,7 +24,9 @@ async def on_message(message):
         if len(message.content.split("$nm ")) > 1:
             teamname = message.content.split("$nm ")[1]
             soup,url = liquipy_object.parse(teamname)
-            match1 = soup.find("table",{"class":"wikitable wikitable-striped infobox_matches_content"})
+            all_matches = soup.findAll("table",{"class":"wikitable wikitable-striped infobox_matches_content"})
+            match1 = all_matches[0]
+            match2 = all_matches[1]
             left_team = match1.find("td",{"class":"team-left"})
             left_team1 = left_team.find("span",{"class":"team-template-team2-short"})
             left_team2 = left_team1.find("span",{"class":"team-template-text"})
