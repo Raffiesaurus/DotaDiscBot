@@ -70,7 +70,10 @@ async def on_message(message):
             today = datetime.strptime(today,"%B %d %Y %H:%M:%S")
             time_till_match = datetime_object - today
             time_till_match = str(time_till_match)
-            text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
+            if time_till_match[0] == '-':
+                text_to_print = "Match for "+teamname+" against "+ateamname+" is ongoing!"
+            else:
+                text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
             await message.channel.send(text_to_print)
         else:
             dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
@@ -94,10 +97,10 @@ async def on_message(message):
 
             if time_till_match[0] == '-':
                 text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']
-                print(text_to_print)
+                await message.channel.send(text_to_print)
             else:
                 text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
-                print(text_to_print)
+                await message.channel.send(text_to_print)
 
     
     if message.content.startswith('$help'):
@@ -105,6 +108,7 @@ async def on_message(message):
                         $nm - Returns the next match to be played according to Liquipedia.\n \
                         $nm [Team Name] - Returns the upcoming match and time for the requested team.\n \
                         $help - Gives list of commands."
+        await message.channel.send(text_to_print)
 
 
 client.run(os.getenv("DISCORD_BOT_TOKEN"))
