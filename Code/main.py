@@ -104,10 +104,7 @@ async def on_message(message):
 
     
     if message.content.startswith('$help'):
-        text_to_print = "Commands for this bot are:\n \
-                        $nm - Returns the next match to be played according to Liquipedia.\n \
-                        $nm [Team Name] - Returns the upcoming match and time for the requested team.\n \
-                        $help - Gives list of commands."
+        text_to_print = "Commands:\n$nm - Returns the ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$help - Gives list of commands."
         await message.channel.send(text_to_print)
 
 
