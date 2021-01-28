@@ -106,17 +106,17 @@ async def on_message(message):
                 else:
                     upcoming_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match))
             if len(ongoing_list) > 0:
-                await message.channel.send("*Ongoing Matches:*")               
+                await message.channel.send("**Ongoing Matches:**")               
                 for text_to_print in ongoing_list:
                     await message.channel.send(text_to_print)
             if len(ongoing_list) > 0:
-                await message.channel.send("\n*Upcoming Matches:*")
+                await message.channel.send("\n**Upcoming Matches:**")
                 for text_to_print in upcoming_list:
                     await message.channel.send(text_to_print)
 
     
     if message.content.startswith('$help'):
-        text_to_print = "*Commands:*\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$help - Gives list of commands."
+        text_to_print = "**Commands:**\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$help - Gives list of commands."
         await message.channel.send(text_to_print)
 
 
