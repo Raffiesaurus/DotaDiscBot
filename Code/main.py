@@ -104,7 +104,7 @@ async def on_message(message):
                 if time_till_match[0] == '-':
                     ongoing_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament'])                
                 else:
-                    upcoming_list.append(teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match))
+                    upcoming_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match))
             if len(ongoing_list) > 0:
                 await message.channel.send("Ongoing Matches:")               
                 for text_to_print in ongoing_list:
