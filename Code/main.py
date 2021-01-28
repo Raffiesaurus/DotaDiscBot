@@ -76,8 +76,8 @@ async def on_message(message):
             else:
                 text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
             await message.channel.send(text_to_print)
-        else:
-            number = additional
+        elif additional.isnumeric():
+            number = int(additional)
             ongoing_list=[]
             upcoming_list=[]
             dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
@@ -100,10 +100,8 @@ async def on_message(message):
                 time_till_match = str(time_till_match)
 
                 if time_till_match[0] == '-':
-                    #text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']
                     ongoing_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament'])                
                 else:
-                    #text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match)
                     upcoming_list.append(teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match))
             for text_to_print in ongoing_list:
                 await message.channel.send("Ongoing Matches:")               
@@ -111,7 +109,33 @@ async def on_message(message):
             for text_to_print in upcoming_list:
                 await message.channel.send("\nUpcoming Matches:")
                 await message.channel.send(text_to_print)
-            
+        
+        else:
+            dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
+            games = dota_obj.get_upcoming_and_ongoing_games()
+            teamname = games[0]['team1']
+            ateamname = games[0]['team2']
+
+            today = datetime.now(pytz.utc)
+            match = games[0]['start_time']
+            match = match.split(" UTC")[0]
+
+            datetime_object = datetime.strptime(match, '%B %d, %Y - %H:%M')
+            datetime_object = datetime.strftime(datetime_object,"%B %d %Y %H:%M:%S")
+            datetime_object = datetime.strptime(datetime_object, '%B %d %Y %H:%M:%S')
+
+            today = datetime.strftime(today,"%B %d %Y %H:%M:%S")
+            today = datetime.strptime(today,"%B %d %Y %H:%M:%S")
+            time_till_match = datetime_object - today
+            time_till_match = str(time_till_match)
+
+            if time_till_match[0] == '-':
+                text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']
+                await message.channel.send(text_to_print)   
+            else:
+                text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match)
+                await message.channel.send(text_to_print)
+
 
     
     if message.content.startswith('$help'):
