@@ -96,5 +96,5 @@ print(text_to_print)
 #     print(text_to_print)
 
 string = "$nm "
-additional = string.split("$nm ")[1]
-print(additional)
+additional = string.split("$nm ")
+print(len(additional))
