@@ -95,6 +95,6 @@ print(text_to_print)
 #     text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
 #     print(text_to_print)
 
-string = "$nm 5"
+string = "$nm "
 additional = string.split("$nm ")[1]
-print(not additional.isnumeric())
+print(additional)
