@@ -21,8 +21,9 @@ async def on_message(message):
     if message.content.startswith('$nm'):
         liquipy_object = liquipediapy('Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)', 'dota2')
         today = datetime.now(pytz.utc)
-        if len(message.content.split("$nm ")) > 1:
-            teamname = message.content.split("$nm ")[1]
+        additional = message.content.split("$nm ")[1]
+        if not additional.isnumeric():
+            teamname = additional
             soup,url = liquipy_object.parse(teamname)
             all_matches = soup.findAll("table",{"class":"wikitable wikitable-striped infobox_matches_content"})
             match1 = all_matches[0]
@@ -76,9 +77,12 @@ async def on_message(message):
                 text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
             await message.channel.send(text_to_print)
         else:
+            number = additional
+            ongoing_list=[]
+            upcoming_list=[]
             dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
             games = dota_obj.get_upcoming_and_ongoing_games()
-            for i in range(0, 5):
+            for i in range(0, number):
                 teamname = games[i]['team1']
                 ateamname = games[i]['team2']
 
@@ -96,11 +100,18 @@ async def on_message(message):
                 time_till_match = str(time_till_match)
 
                 if time_till_match[0] == '-':
-                    text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament']
-                    await message.channel.send(text_to_print)
+                    #text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']
+                    ongoing_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament'])                
                 else:
-                    text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match)
-                    await message.channel.send(text_to_print)
+                    #text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match)
+                    upcoming_list.append(teamname+" vs "+ateamname+". \nTournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match))
+            for text_to_print in ongoing_list:
+                await message.channel.send("Ongoing Matches:")               
+                await message.channel.send(text_to_print)
+            for text_to_print in upcoming_list:
+                await message.channel.send("\nUpcoming Matches:")
+                await message.channel.send(text_to_print)
+            
 
     
     if message.content.startswith('$help'):

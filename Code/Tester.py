@@ -1,10 +1,10 @@
-from time import time
-import discord
-import os
-from liquipediapy import dota
-from liquipediapy import liquipediapy
-from datetime import datetime
-import pytz
+# from time import time
+# import discord
+# import os
+# from liquipediapy import dota
+# from liquipediapy import liquipediapy
+# from datetime import datetime
+# import pytz
 """
 liquipy_object = liquipediapy('Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)', 'dota2')
 today = datetime.now(pytz.utc)
@@ -68,29 +68,33 @@ print(text_to_print)
 # else:
 #     print(len(string2))
 
-dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
-games = dota_obj.get_upcoming_and_ongoing_games()
-#print(games[0])
+# dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
+# games = dota_obj.get_upcoming_and_ongoing_games()
+# #print(games[0])
 
-teamname = games[0]['team1']
-ateamname = games[0]['team2']
+# teamname = games[0]['team1']
+# ateamname = games[0]['team2']
 
-today = datetime.now(pytz.utc)
-match = games[0]['start_time']
-match = match.split(" UTC")[0]
+# today = datetime.now(pytz.utc)
+# match = games[0]['start_time']
+# match = match.split(" UTC")[0]
 
-datetime_object = datetime.strptime(match, '%B %d, %Y - %H:%M')
-datetime_object = datetime.strftime(datetime_object,"%B %d %Y %H:%M:%S")
-datetime_object = datetime.strptime(datetime_object, '%B %d %Y %H:%M:%S')
+# datetime_object = datetime.strptime(match, '%B %d, %Y - %H:%M')
+# datetime_object = datetime.strftime(datetime_object,"%B %d %Y %H:%M:%S")
+# datetime_object = datetime.strptime(datetime_object, '%B %d %Y %H:%M:%S')
 
-today = datetime.strftime(today,"%B %d %Y %H:%M:%S")
-today = datetime.strptime(today,"%B %d %Y %H:%M:%S")
-time_till_match = datetime_object - today
-time_till_match = str(time_till_match)
+# today = datetime.strftime(today,"%B %d %Y %H:%M:%S")
+# today = datetime.strptime(today,"%B %d %Y %H:%M:%S")
+# time_till_match = datetime_object - today
+# time_till_match = str(time_till_match)
 
-if time_till_match[0] == '-':
-    text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']
-    print(text_to_print)
-else:
-    text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
-    print(text_to_print)
+# if time_till_match[0] == '-':
+#     text_to_print = "Ongoing Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']
+#     print(text_to_print)
+# else:
+#     text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
+#     print(text_to_print)
+
+string = "$nm 5"
+additional = string.split("$nm ")[1]
+print(not additional.isnumeric())
