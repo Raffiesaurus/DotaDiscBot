@@ -5,6 +5,10 @@
 # from liquipediapy import liquipediapy
 # from datetime import datetime
 # import pytz
+import requests
+from bs4 import BeautifulSoup
+from tabulate import tabulate
+
 """
 liquipy_object = liquipediapy('Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)', 'dota2')
 today = datetime.now(pytz.utc)
@@ -59,7 +63,6 @@ time_till_match = datetime_object - today
 time_till_match = str(time_till_match)
 text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
 print(text_to_print)
-"""
 
 # string1 = "$nm Liquid"
 # string2 = string1.split("$nm ")
@@ -95,6 +98,69 @@ print(text_to_print)
 #     text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
 #     print(text_to_print)
 
-string = "$nm "
-additional = string.split("$nm ")
-print(len(additional))
+string = "$table NA Upper"
+additional = string.split("$table ")
+region = additional[1].split(" ")[0]
+division = additional[1].split(" ")[1]
+
+eu_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Europe/Lower_Division"
+cis_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/CIS/Lower_Division"
+na_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/North_America/Lower_Division"
+sa_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/South_America/Lower_Division"
+sea_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Lower_Division"
+cn_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Lower_Division"
+eu_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Europe/Upper_Division"
+cis_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/CIS/Upper_Division"
+na_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/North_America/Upper_Division"
+sa_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/South_America/Upper_Division"
+sea_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Upper_Division"
+cn_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Upper_Division"
+
+if region == "NA":
+    if division == "Upper":
+        url = na_upper
+    elif division == "Lower":
+        url = na_lower
+elif region == "SA":
+    if division == "Upper":
+        url = sa_upper
+    elif division == "Lower":
+        url = sa_lower
+elif region == "EU":
+    if division == "Upper":
+        url = eu_upper
+    elif division == "Lower":
+        url = eu_lower
+elif region == "SEA":
+    if division == "Upper":
+        url = sea_upper
+    elif division == "Lower":
+        url = sea_lower
+elif region == "CIS":
+    if division == "Upper":
+        url = cis_upper
+    elif division == "Lower":
+        url = cis_lower
+elif region == "CN":
+    if division == "Upper":
+        url = cn_upper
+    elif division == "Lower":
+        url = cn_lower        
+
+page = requests.get(url)
+soup = BeautifulSoup(page.content, 'html.parser')
+table = soup.find("table",{"class":"wikitable wikitable-bordered grouptable"})
+rows = table.findAll("tr",{"data-toggle-area-content":"1"})
+teams = table.findAll("td",{"class":"grouptableslot"})
+ij=0
+data = []
+for team in teams:
+
+    score = rows[ij].findAll("td",{"width":"35px"})
+    scores = score[0].text + "\t\t" +score[1].text
+    result = team.text + "\t\t" + scores
+    data.append([ij+1, team.text, score[0].text, score[1].text])
+    ij+=1
+
+print (tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
+"""

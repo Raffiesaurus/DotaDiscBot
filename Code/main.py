@@ -5,6 +5,8 @@ from liquipediapy import dota
 from liquipediapy import liquipediapy
 from datetime import datetime
 import pytz
+from bs4 import BeautifulSoup
+from tabulate import tabulate
 
 client = discord.Client()
 dota_obj = dota("Dota Match Timer Discord Bot (rafs1800@outlook.com)")
@@ -115,8 +117,74 @@ async def on_message(message):
                     await message.channel.send(text_to_print)
 
     
+    if message.content.startswith('$table'):
+        additional = message.content.split("$table ")
+        region = additional[1].split(" ")[0]
+        division = additional[1].split(" ")[1]
+
+        eu_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Europe/Lower_Division"
+        cis_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/CIS/Lower_Division"
+        na_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/North_America/Lower_Division"
+        sa_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/South_America/Lower_Division"
+        sea_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Lower_Division"
+        cn_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Lower_Division"
+        eu_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Europe/Upper_Division"
+        cis_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/CIS/Upper_Division"
+        na_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/North_America/Upper_Division"
+        sa_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/South_America/Upper_Division"
+        sea_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Upper_Division"
+        cn_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Upper_Division"
+
+        if region == "NA":
+            if division == "Upper":
+                url = na_upper
+            elif division == "Lower":
+                url = na_lower
+        elif region == "SA":
+            if division == "Upper":
+                url = sa_upper
+            elif division == "Lower":
+                url = sa_lower
+        elif region == "EU":
+            if division == "Upper":
+                url = eu_upper
+            elif division == "Lower":
+                url = eu_lower
+        elif region == "SEA":
+            if division == "Upper":
+                url = sea_upper
+            elif division == "Lower":
+                url = sea_lower
+        elif region == "CIS":
+            if division == "Upper":
+                url = cis_upper
+            elif division == "Lower":
+                url = cis_lower
+        elif region == "CN":
+            if division == "Upper":
+                url = cn_upper
+            elif division == "Lower":
+                url = cn_lower        
+
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        table = soup.find("table",{"class":"wikitable wikitable-bordered grouptable"})
+        rows = table.findAll("tr",{"data-toggle-area-content":"1"})
+        teams = table.findAll("td",{"class":"grouptableslot"})
+        ij=0
+        data = []
+        for team in teams:
+
+            score = rows[ij].findAll("td",{"width":"35px"})
+            scores = score[0].text + "\t\t" +score[1].text
+            result = team.text + "\t\t" + scores
+            data.append([ij+1, team.text, score[0].text, score[1].text])
+            ij+=1
+
+        await message.channel.send(tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
+
     if message.content.startswith('$help'):
-        text_to_print = "**Commands:**\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$help - Gives list of commands."
+        text_to_print = "**Commands:**\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region\n$help - Gives list of commands."
         await message.channel.send(text_to_print)
 
 
