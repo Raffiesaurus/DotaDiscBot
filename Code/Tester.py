@@ -8,6 +8,7 @@
 import requests
 from bs4 import BeautifulSoup
 from tabulate import tabulate
+import pandas
 
 """
 liquipy_object = liquipediapy('Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)', 'dota2')
@@ -97,7 +98,7 @@ print(text_to_print)
 # else:
 #     text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
 #     print(text_to_print)
-
+"""
 string = "$table NA Upper"
 additional = string.split("$table ")
 region = additional[1].split(" ")[0]
@@ -161,6 +162,7 @@ for team in teams:
     result = team.text + "\t\t" + scores
     data.append([ij+1, team.text, score[0].text, score[1].text])
     ij+=1
+headers=["Position", "Team", "Serires Score", "Map Score"]
+print(pandas.DataFrame(data, headers))
+#print (tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
 
-print (tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
-"""

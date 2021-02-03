@@ -14,7 +14,9 @@ iniconfig==1.1.1
 liquipediapy==2.1.0
 lxml==4.6.2
 multidict==5.1.0
+numpy==1.20.0
 packaging==20.8
+pandas==1.2.1
 pluggy==0.13.1
 pprintpp==0.4.0
 py==1.10.0

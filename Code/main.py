@@ -7,6 +7,8 @@ from datetime import datetime
 import pytz
 from bs4 import BeautifulSoup
 from tabulate import tabulate
+import requests
+
 
 client = discord.Client()
 dota_obj = dota("Dota Match Timer Discord Bot (rafs1800@outlook.com)")
@@ -78,7 +80,7 @@ async def on_message(message):
                 text_to_print = "Match for "+teamname+" against "+ateamname+" is ongoing!"
             else:
                 text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
-            await message.channel.send(text_to_print)
+            await message.channel.send("```"+text_to_print+"```")
         
         elif additional.isnumeric():
             number = int(additional)
@@ -107,14 +109,20 @@ async def on_message(message):
                     ongoing_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament'])                
                 else:
                     upcoming_list.append(teamname+" vs "+ateamname+". Tournament: "+games[i]['tournament']+"\nTime till match: "+str(time_till_match))
+            text_to_prints=""
             if len(ongoing_list) > 0:
-                await message.channel.send("**Ongoing Matches:**")               
+                #await message.channel.send("**Ongoing Matches:**")          
+                text_to_prints = "Ongoing Matches:\n--------------------------------\n"     
                 for text_to_print in ongoing_list:
-                    await message.channel.send(text_to_print)
+                    #await message.channel.send(text_to_print)
+                    text_to_prints = text_to_prints + text_to_print +"\n"
             if len(upcoming_list) > 0:
-                await message.channel.send("\n**Upcoming Matches:**")
+                text_to_prints = text_to_prints + "Upcoming Matches:\n--------------------------------\n"
+                #await message.channel.send("\n**Upcoming Matches:**")
                 for text_to_print in upcoming_list:
-                    await message.channel.send(text_to_print)
+                    #await message.channel.send(text_to_print)
+                    text_to_prints = text_to_prints + text_to_print +"\n"
+            await message.channel.send("```"+text_to_prints+"```")
 
     
     if message.content.startswith('$table'):
@@ -179,12 +187,13 @@ async def on_message(message):
             scores = score[0].text + "\t\t" +score[1].text
             result = team.text + "\t\t" + scores
             data.append([ij+1, team.text, score[0].text, score[1].text])
+            #await message.channel.send(str(ij+1) + " " +team.text + " " + score[0].text + " " + score[1].text)
             ij+=1
-
-        await message.channel.send(tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
+        end_table = tabulate(data, headers=["Position", "Team", "Series Score", "Map Score"])
+        await message.channel.send("```"+end_table+"```")
 
     if message.content.startswith('$help'):
-        text_to_print = "**Commands:**\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region\n$help - Gives list of commands."
+        text_to_print = "```Commands:\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$help - Gives list of commands.```"
         await message.channel.send(text_to_print)
 
 
