@@ -112,12 +112,12 @@ async def on_message(message):
             text_to_prints=""
             if len(ongoing_list) > 0:
                 #await message.channel.send("**Ongoing Matches:**")          
-                text_to_prints = "Ongoing Matches:\n--------------------------------\n"     
+                text_to_prints = "--------------------------------\nOngoing Matches:\n--------------------------------\n"     
                 for text_to_print in ongoing_list:
                     #await message.channel.send(text_to_print)
                     text_to_prints = text_to_prints + text_to_print +"\n"
             if len(upcoming_list) > 0:
-                text_to_prints = text_to_prints + "Upcoming Matches:\n--------------------------------\n"
+                text_to_prints = text_to_prints + "--------------------------------\nUpcoming Matches:\n--------------------------------\n"
                 #await message.channel.send("\n**Upcoming Matches:**")
                 for text_to_print in upcoming_list:
                     #await message.channel.send(text_to_print)
