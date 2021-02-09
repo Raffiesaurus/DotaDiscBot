@@ -32,7 +32,7 @@ async def on_message(message):
             soup,url = liquipy_object.parse(teamname)
             all_matches = soup.findAll("table",{"class":"wikitable wikitable-striped infobox_matches_content"})
             match1 = all_matches[0]
-            match2 = all_matches[1]
+
             left_team = match1.find("td",{"class":"team-left"})
             left_team1 = left_team.find("span",{"class":"team-template-team2-short"})
             left_team2 = left_team1.find("span",{"class":"team-template-text"})
@@ -41,28 +41,11 @@ async def on_message(message):
             right_team1 = right_team.find("span",{"class":"team-template-team-short"})
             right_team2 = right_team1.find("span",{"class":"team-template-text"})
             right_team_name = right_team2.text
-            left2_team = match2.find("td",{"class":"team-left"})
-            left2_team1 = left2_team.find("span",{"class":"team-template-team2-short"})
-            left2_team2 = left2_team1.find("span",{"class":"team-template-text"})
-            left2_team_name = left2_team2.text
-            right2_team = match2.find("td",{"class":"team-right"})   
-            right2_team1 = right2_team.find("span",{"class":"team-template-team-short"})
-            right2_team2 = right2_team1.find("span",{"class":"team-template-text"})
-            right2_team_name = right2_team2.text
 
-            if left_team_name.lower() == left2_team_name.lower():
-                teamname2 = left_team_name
-            elif left_team_name.lower() == right2_team_name.lower():
-                teamname2 = left_team_name
-            elif right_team_name.lower() == right2_team_name.lower():
-                teamname2 = right_team_name
-            elif right_team_name.lower() == left2_team_name.lower():
-                teamname2 = right_team_name
-            
-            if left_team_name.lower() == teamname2.lower():
+            if left_team_name.lower() == teamname.lower():
                 ateamname = right_team_name
             else:
-                ateamname = left_team_name
+                ateamname = left_team_name                    
 
             match = soup.find("span",{"class":"timer-object timer-object-countdown-only"})
             match = match.text
