@@ -151,18 +151,29 @@ elif region == "CN":
 page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
 table = soup.find("table",{"class":"wikitable wikitable-bordered grouptable"})
-rows = table.findAll("tr",{"data-toggle-area-content":"1"})
-teams = table.findAll("td",{"class":"grouptableslot"})
+rows = table.findAll("tr",{"data-toggle-area-content":"6"})
+#teams = table.findAll("td",{"class":"grouptableslot"})
 ij=0
 data = []
-for team in teams:
 
+for ij in range(0,8):
+    teams = rows[ij].find("td",{"class":"grouptableslot"})
     score = rows[ij].findAll("td",{"width":"35px"})
     scores = score[0].text + "\t\t" +score[1].text
-    result = team.text + "\t\t" + scores
-    data.append([ij+1, team.text, score[0].text, score[1].text])
-    ij+=1
+    result = teams.text + "\t\t" + scores
+    print(str(score[0].text)+"\n\n")
+    data.append([ij+1, teams.text, score[0].text, score[1].text])
+"""
+for ij in range(0,8):
+
+    teams = rows[ij].find("td",{"class":"grouptableslot"})
+    score = rows[ij].findAll("td",{"width":"35px"})
+    scores = score[0].text + "\t\t" +score[1].text
+    result = teams.text + "\t\t" + scores
+    data.append([ij+1, teams.text, score[0].text, score[1].text])
+"""
 headers=["Position", "Team", "Serires Score", "Map Score"]
-print(pandas.DataFrame(data, headers))
+end_table = tabulate(data, headers=["Position", "Team", "Series Score", "Map Score"])
+print(end_table)
 #print (tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
 

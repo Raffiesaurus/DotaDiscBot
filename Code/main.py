@@ -126,52 +126,51 @@ async def on_message(message):
         sea_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Upper_Division"
         cn_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Upper_Division"
 
-        if region == "NA":
-            if division == "Upper":
+        if region == "NA" or region == "na" or region == "Na":
+            if division == "Upper" or division == "upper" or division == "UPPER":
                 url = na_upper
-            elif division == "Lower":
+            elif division == "Lower" or division == "lower" or division == "LOWER":
                 url = na_lower
-        elif region == "SA":
-            if division == "Upper":
+        elif region == "SA" or region == "sa" or region == "Sa":
+            if division == "Upper" or division == "upper" or division == "UPPER":
                 url = sa_upper
-            elif division == "Lower":
+            elif division == "Lower" or division == "lower" or division == "LOWER":
                 url = sa_lower
-        elif region == "EU":
-            if division == "Upper":
+        elif region == "EU" or region == "eu" or region == "Eu":
+            if division == "Upper" or division == "upper" or division == "UPPER":
                 url = eu_upper
-            elif division == "Lower":
+            elif division == "Lower" or division == "lower" or division == "LOWER":
                 url = eu_lower
-        elif region == "SEA":
-            if division == "Upper":
+        elif region == "SEA" or region == "sea" or region == "Sea":
+            if division == "Upper" or division == "upper" or division == "UPPER":
                 url = sea_upper
-            elif division == "Lower":
+            elif division == "Lower" or division == "lower" or division == "LOWER":
                 url = sea_lower
-        elif region == "CIS":
-            if division == "Upper":
+        elif region == "CIS" or region == "cis" or region == "Cis":
+            if division == "Upper" or division == "upper" or division == "UPPER":
                 url = cis_upper
-            elif division == "Lower":
+            elif division == "Lower" or division == "lower" or division == "LOWER":
                 url = cis_lower
-        elif region == "CN":
-            if division == "Upper":
+        elif region == "CN" or region == "cn" or region == "Cn":
+            if division == "Upper" or division == "upper" or division == "UPPER":
                 url = cn_upper
-            elif division == "Lower":
+            elif division == "Lower" or division == "lower" or division == "LOWER":
                 url = cn_lower        
 
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
         table = soup.find("table",{"class":"wikitable wikitable-bordered grouptable"})
         rows = table.findAll("tr",{"data-toggle-area-content":"1"})
-        teams = table.findAll("td",{"class":"grouptableslot"})
         ij=0
         data = []
-        for team in teams:
+        for ij in range(0,8):
 
+            teams = rows[ij].find("td",{"class":"grouptableslot"})
             score = rows[ij].findAll("td",{"width":"35px"})
             scores = score[0].text + "\t\t" +score[1].text
-            result = team.text + "\t\t" + scores
-            data.append([ij+1, team.text, score[0].text, score[1].text])
+            result = teams.text + "\t\t" + scores
+            data.append([ij+1, teams.text, score[0].text, score[1].text])
             #await message.channel.send(str(ij+1) + " " +team.text + " " + score[0].text + " " + score[1].text)
-            ij+=1
         end_table = tabulate(data, headers=["Position", "Team", "Series Score", "Map Score"])
         await message.channel.send("```"+end_table+"```")
 
