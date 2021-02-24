@@ -11,3 +11,5 @@
 - $help - Gives list of commands.
 
 Some team name exceptions: SG doesn't work whereas SG e-sports does, this is how the Liquipedia API works. So in case there is no response, try diferent variations of the team name.
+
+## Invite Link: https://top.gg/bot/801147321197789204
