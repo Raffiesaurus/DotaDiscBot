@@ -175,8 +175,9 @@ async def on_message(message):
         await message.channel.send("```"+end_table+"```")
 
     if message.content.startswith('$help'):
-        text_to_print = "```Commands:\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$help - Gives list of commands.```"
+        text_to_print = "```Commands:\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$dpc - Displays the top 12 teams with dpc points\n$help - Gives list of commands.```"
         await message.channel.send(text_to_print)
+    
     if message.content.startswith('$dpc'):
         url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
         page = requests.get(url)
