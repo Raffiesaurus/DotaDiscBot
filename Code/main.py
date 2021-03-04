@@ -177,6 +177,20 @@ async def on_message(message):
     if message.content.startswith('$help'):
         text_to_print = "```Commands:\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$help - Gives list of commands.```"
         await message.channel.send(text_to_print)
-
+    if message.content.startswith('$dpc'):
+        url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, 'html.parser')
+        table = soup.findAll("table",{"class":"wikitable"})[1]
+        rows = table.findAll("tr")
+        ij=0
+        data = []
+        for i in range(2,14):
+            team = rows[i].find("span",{"class":"team-template-team-standard"}).text
+            points = rows[i].findAll("td")[2].text
+            data.append([ij+1, team, points])
+            ij+=1
+        end_table = tabulate(data, headers=["Position", "Team", "Points"])
+        await message.channel.send("```"+end_table+"```")
 
 client.run(os.getenv("DISCORD_BOT_TOKEN"))

@@ -98,7 +98,7 @@ print(text_to_print)
 # else:
 #     text_to_print = "Upcoming Match is "+teamname+" vs "+ateamname+". Tournament: "+games[0]['tournament']+"\nTime till match: "+str(time_till_match)
 #     print(text_to_print)
-"""
+
 string = "$table NA Upper"
 additional = string.split("$table ")
 region = additional[1].split(" ")[0]
@@ -163,7 +163,7 @@ for ij in range(0,8):
     result = teams.text + "\t\t" + scores
     print(str(score[0].text)+"\n\n")
     data.append([ij+1, teams.text, score[0].text, score[1].text])
-"""
+
 for ij in range(0,8):
 
     teams = rows[ij].find("td",{"class":"grouptableslot"})
@@ -171,9 +171,38 @@ for ij in range(0,8):
     scores = score[0].text + "\t\t" +score[1].text
     result = teams.text + "\t\t" + scores
     data.append([ij+1, teams.text, score[0].text, score[1].text])
-"""
+
 headers=["Position", "Team", "Serires Score", "Map Score"]
 end_table = tabulate(data, headers=["Position", "Team", "Series Score", "Map Score"])
 print(end_table)
 #print (tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
+"""
 
+url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
+page = requests.get(url)
+soup = BeautifulSoup(page.content, 'html.parser')
+table = soup.findAll("table",{"class":"wikitable"})[1]
+rows = table.findAll("tr")
+ij=0
+data = []
+for i in range(2,14):
+    team = rows[i].find("span",{"class":"team-template-team-standard"}).text
+    points = rows[i].findAll("td")[2].text
+    data.append([ij+1, team, points])
+    ij+=1
+end_table = tabulate(data, headers=["Position", "Team", "Points"])
+print(end_table)
+#print(rows[2])
+#points = table.find("td")
+#print(points)
+
+"""
+for ij in range(0,8):
+
+    teams = team[ij].text
+    score = rows[ij].findAll("td",{"width":"35px"})
+    scores = score[0].text + "\t\t" +score[1].text
+    result = teams.text + "\t\t" + scores
+    data.append([ij+1, teams.text, score[0].text, score[1].text])
+    #await message.channel.send(str(ij+1) + " " +team.text + " " + score[0].text + " " + score[1].text)
+"""
