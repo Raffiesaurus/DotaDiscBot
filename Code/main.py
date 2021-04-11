@@ -113,18 +113,18 @@ async def on_message(message):
         region = additional[1].split(" ")[0]
         division = additional[1].split(" ")[1]
 
-        eu_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Europe/Lower_Division"
-        cis_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/CIS/Lower_Division"
-        na_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/North_America/Lower_Division"
-        sa_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/South_America/Lower_Division"
-        sea_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Lower_Division"
-        cn_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Lower_Division"
-        eu_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Europe/Upper_Division"
-        cis_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/CIS/Upper_Division"
-        na_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/North_America/Upper_Division"
-        sa_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/South_America/Upper_Division"
-        sea_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/Southeast_Asia/Upper_Division"
-        cn_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/1/China/Upper_Division"
+        eu_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/Europe/Lower_Division"
+        cis_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/CIS/Lower_Division"
+        na_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/North_America/Lower_Division"
+        sa_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/South_America/Lower_Division"
+        sea_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/Southeast_Asia/Lower_Division"
+        cn_lower = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/China/Lower_Division"
+        eu_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/Europe/Upper_Division"
+        cis_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/CIS/Upper_Division"
+        na_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/North_America/Upper_Division"
+        sa_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/South_America/Upper_Division"
+        sea_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/Southeast_Asia/Upper_Division"
+        cn_upper = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/2/China/Upper_Division"
 
         if region == "NA" or region == "na" or region == "Na":
             if division == "Upper" or division == "upper" or division == "UPPER":
