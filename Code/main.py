@@ -160,7 +160,7 @@ async def on_message(message):
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
         table = soup.find("table",{"class":"wikitable wikitable-bordered grouptable"})
-        rows = table.findAll("tr",{"data-toggle-area-content":"2"})
+        rows = table.findAll("tr",{"data-toggle-area-content":"3"})
         ij=0
         data = []
         for ij in range(0,8):
