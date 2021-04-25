@@ -64,13 +64,16 @@ async def on_message(message):
             else:
                 text_to_print = "Next Match for "+teamname+" is against "+ateamname+" on: "+str(datetime_object)+" UTC.\n"+"Time till match: "+str(time_till_match)
             await message.channel.send("```"+text_to_print+"```")
-        
+
+    """
+    API function dota_obj.get_upcoming_and_ongoing_games() died        
         elif additional.isnumeric():
             number = int(additional)
             ongoing_list=[]
             upcoming_list=[]
             dota_obj = dota("Dota Match Schedule Timer Discord Bot (rafs1800@outlook.com)")
             games = dota_obj.get_upcoming_and_ongoing_games()
+            print(dota_obj.get_upcoming_and_ongoing_games())
             for i in range(0, number):
                 teamname = games[i]['team1']
                 ateamname = games[i]['team2']
@@ -106,7 +109,7 @@ async def on_message(message):
                     #await message.channel.send(text_to_print)
                     text_to_prints = text_to_prints + text_to_print +"\n"
             await message.channel.send("```"+text_to_prints+"```")
-
+    """
     
     if message.content.startswith('$table'):
         additional = message.content.split("$table ")
@@ -175,7 +178,7 @@ async def on_message(message):
         await message.channel.send("```"+end_table+"```")
 
     if message.content.startswith('$help'):
-        text_to_print = "```Commands:\n$nm [Number]- Returns the requested number of ongoing/next match to be played according to Liquipedia.\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$dpc - Displays the top 12 teams with dpc points\n$help - Gives list of commands.```"
+        text_to_print = "```Commands:\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/CN/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$dpc - Displays the top 12 teams with dpc points\n$help - Gives list of commands.```"
         await message.channel.send(text_to_print)
     
     if message.content.startswith('$dpc'):
