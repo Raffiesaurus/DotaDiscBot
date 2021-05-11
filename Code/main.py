@@ -163,7 +163,7 @@ async def on_message(message):
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
         table = soup.find("table",{"class":"wikitable wikitable-bordered grouptable"})
-        rows = table.findAll("tr",{"data-toggle-area-content":"5"})
+        rows = table.findAll("tr",{"data-toggle-area-content":"6"})
         ij=0
         data = []
         for ij in range(0,8):
@@ -178,7 +178,7 @@ async def on_message(message):
         await message.channel.send("```"+end_table+"```")
 
     if message.content.startswith('$help'):
-        text_to_print = "```Commands:\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/EU/NA/SA/SEA] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$dpc - Displays the top 12 teams with dpc points\n$help - Gives list of commands.```"
+        text_to_print = "```Commands:\n$nm [Team Name] - Returns the upcoming match and time for the requested team.\n$table [CIS/EU/NA/SA/SEA/CN] [Upper/Lower] - Returns the Upper or Lower Division table for the requested region.\n$dpc - Displays the top 12 teams with dpc points\n$help - Gives list of commands.```"
         await message.channel.send(text_to_print)
     
     if message.content.startswith('$dpc'):
