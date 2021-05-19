@@ -195,7 +195,9 @@ async def on_message(message):
         for i in range(2,14):
             team = rows[i].find("span",{"class":"team-template-team-standard"}).text
             points = rows[i].findAll("td")[2].text
-            points = points[:-1]
+            if points.find("P")>0:
+                pos = points.index("P")
+                points = points[:pos]
             data.append([ij+1, team, points])
             ij+=1
         end_table = tabulate(data, headers=["Position", "Team", "Points"])

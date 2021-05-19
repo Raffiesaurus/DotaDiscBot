@@ -177,7 +177,7 @@ end_table = tabulate(data, headers=["Position", "Team", "Series Score", "Map Sco
 print(end_table)
 #print (tabulate(data, headers=["Position", "Team", "Serires Score", "Map Score"]))
 """
-
+"""
 url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
 page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
@@ -192,6 +192,7 @@ for i in range(2,14):
     ij+=1
 end_table = tabulate(data, headers=["Position", "Team", "Points"])
 print(end_table)
+"""
 #print(rows[2])
 #points = table.find("td")
 #print(points)
@@ -206,3 +207,21 @@ for ij in range(0,8):
     data.append([ij+1, teams.text, score[0].text, score[1].text])
     #await message.channel.send(str(ij+1) + " " +team.text + " " + score[0].text + " " + score[1].text)
 """
+
+from bs4 import BeautifulSoup
+from tabulate import tabulate
+import requests
+url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
+page = requests.get(url)
+soup = BeautifulSoup(page.content, 'html.parser')
+table = soup.findAll("table",{"class":"wikitable"})[1]
+rows = table.findAll("tr")
+ij=0
+data = []
+for i in range(2,20):
+    team = rows[i].find("span",{"class":"team-template-team-standard"}).text
+    points = rows[i].findAll("td")[2].text
+    if points.find("P")>0:
+        pos = points.index("P")
+        points = points[:pos]
+    print(points)
