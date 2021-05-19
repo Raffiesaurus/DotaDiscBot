@@ -208,9 +208,6 @@ for ij in range(0,8):
     #await message.channel.send(str(ij+1) + " " +team.text + " " + score[0].text + " " + score[1].text)
 """
 
-from bs4 import BeautifulSoup
-from tabulate import tabulate
-import requests
 url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
 page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
@@ -218,10 +215,20 @@ table = soup.findAll("table",{"class":"wikitable"})[1]
 rows = table.findAll("tr")
 ij=0
 data = []
-for i in range(2,20):
+for i in range(2,14):
     team = rows[i].find("span",{"class":"team-template-team-standard"}).text
     points = rows[i].findAll("td")[2].text
+    points_list = list(points)
     if points.find("P")>0:
         pos = points.index("P")
-        points = points[:pos]
-    print(points)
+        points_list[pos]=" "
+    while(1):
+        if not len(points_list) == 6:
+            points_list.append(' ')
+        if len(points_list) == 6:
+            break
+    points = "".join(points_list)
+    data.append([ij+1, team, points])
+    ij+=1
+end_table = tabulate(data, headers=["Position", "Team", "Points"])
+print(end_table)

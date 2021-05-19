@@ -197,7 +197,13 @@ async def on_message(message):
             points = rows[i].findAll("td")[2].text
             if points.find("P")>0:
                 pos = points.index("P")
-                points = points[:pos]
+                points_list[pos]=" "
+            while(1):
+                if not len(points_list) == 6:
+                    points_list.append(' ')
+                if len(points_list) == 6:
+                    break
+            points = "".join(points_list)
             data.append([ij+1, team, points])
             ij+=1
         end_table = tabulate(data, headers=["Position", "Team", "Points"])
