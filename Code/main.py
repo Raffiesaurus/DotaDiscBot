@@ -188,8 +188,9 @@ async def on_message(message):
         url = "https://liquipedia.net/dota2/Dota_Pro_Circuit/2021/Rankings"
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
-        table = soup.findAll("table",{"class":"wikitable"})[1]
-        rows = table.findAll("tr")
+        table = soup.findAll("table",{"class":"wikitable"})[2]
+        body = table.find("tbody")
+        rows = body.findAll("tr")
         ij=0
         data = []
         for i in range(2,14):
