@@ -1,4 +1,7 @@
 # DotaDiscBot
+
+--Discontinued with the removal of DPC system--
+
  A Discord bot that will reply with a time countdown for a dota team's next match, get a list of upcoming/ongoing games as well as display the current dpc table standings.
  
  ## Commands:
