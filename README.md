@@ -1,18 +1,34 @@
 # DotaDiscBot
 
-_Discontinued with the removal of DPC system_
+> ⚠️ **Discontinued** — The DPC system was removed by Valve. The bot no longer functions as the underlying data source (Liquipedia DPC standings/matches) no longer exists in the same form.
 
- A Discord bot that will reply with a time countdown for a dota team's next match, get a list of upcoming/ongoing games as well as display the current dpc table standings.
- 
- ## Commands:
-- $nm (Number)- Returns the requested number of ongoing/next match to be played according to Liquipedia.
+A Discord bot that provided real-time **Dota 2 DPC match information** — countdown timers to upcoming matches, ongoing match listings, and DPC regional table standings — sourced from the Liquipedia API.
 
-- $nm (Team Name) - Returns the upcoming match and time for the requested team.
+## About
 
-- $table (CIS/CN/EU/NA/SA/SEA) (Upper/Lower) - Returns the Upper or Lower Division table for the requested region.
+Built for Dota 2 communities that wanted match info without leaving Discord. The bot scraped and parsed Liquipedia's API to return live DPC standings and match schedules, with a simple command syntax so anyone in the server could query it.
 
-- $help - Gives list of commands.
+This was a personal side project driven by actually wanting the thing to exist — checking Liquipedia mid-game is annoying.
 
-Some team name exceptions: SG doesn't work whereas SG e-sports does, this is how the Liquipedia API works. So in case there is no response, try diferent variations of the team name.
+## Commands
 
-## Invite Link: https://top.gg/bot/801147321197789204
+| Command | Description |
+|---|---|
+| `$nm <number>` | Returns the next N upcoming/ongoing matches |
+| `$nm <team name>` | Returns the next match + countdown for a specific team |
+| `$table <region> <upper/lower>` | Returns the DPC division table for a region |
+| `$help` | Lists all commands |
+
+**Regions:** CIS, CN, EU, NA, SA, SEA
+
+> **Note:** Some team names have quirks due to Liquipedia’s API — e.g. `SG e-sports` works, `SG` doesn’t. Try variations if you get no response.
+
+## Tech
+
+- **Language:** Python
+- **Library:** discord.py
+- **Data source:** Liquipedia API
+
+## License
+
+MIT
